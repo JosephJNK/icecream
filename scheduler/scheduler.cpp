@@ -640,9 +640,10 @@ static CompileServer *pick_server(Job *job)
         // Ignore ineligible servers
         if (!cs->is_eligible_now(job)) {
 #if DEBUG_SCHEDULER > 1
-            if ((int(cs->jobList().size()) >= cs->maxJobs() + c->maxPreloadJobs()) || (cs->load() >= 1000)) {
+            if ((int(cs->jobList().size()) >= cs->maxJobs() + cs->maxPreloadCount()) || (cs->load() >= 1000)) {
                 trace() << "overloaded " << cs->nodeName() << " " << cs->jobList().size() << "/"
                         <<  cs->maxJobs() << " jobs, load:" << cs->load() << endl;
+	    }
             else
                 trace() << cs->nodeName() << " not eligible" << endl;
 #endif
